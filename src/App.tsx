@@ -15,14 +15,16 @@ const MyFirstComponent = () => (
 
 let count2 = 0;
 
-const Counter = () => {
+const Counter = (props: { stopValue?: number }) => {
   console.log('render');
 
   const [count, setCount] = useState<number>(0);
 
   const handleClick = () => {
     count2 += 1;
-    setCount(count + 1);
+    if (!props.stopValue || (props.stopValue && count < props.stopValue)) {
+      setCount(count + 1);
+    }
     console.log(`Count: ${count}, count2: ${count2}`);
   }
 
@@ -38,7 +40,7 @@ const Counter = () => {
 function App() {
   return (
     <div className="App">
-      <Counter />
+      <Counter stopValue={3} />
       <Counter />
       <Counter />
       <MyFirstComponent />
