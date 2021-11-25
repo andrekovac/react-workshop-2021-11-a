@@ -1,5 +1,5 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 const WasNeues = () => <div>Chinese: 世界，你好！</div>;
 
@@ -13,10 +13,34 @@ const MyFirstComponent = () => (
   </>
 );
 
+let count2 = 0;
+
+const Counter = () => {
+  console.log('render');
+
+  const [count, setCount] = useState<number>(0);
+
+  const handleClick = () => {
+    count2 += 1;
+    setCount(count + 1);
+    console.log(`Count: ${count}, count2: ${count2}`);
+  }
+
+  return (
+    <div>
+      <button onClick={handleClick}>Increment</button>
+      <p>Count: {count}</p>
+    </div>
+  );
+};
+
 // Declarative
 function App() {
   return (
     <div className="App">
+      <Counter />
+      <Counter />
+      <Counter />
       <MyFirstComponent />
     </div>
   );
