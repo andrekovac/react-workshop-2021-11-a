@@ -3,7 +3,7 @@ import "./App.css";
 
 const WasNeues = () => <div>Chinese: 世界，你好！</div>;
 
-const MyFirstComponent = () => (
+const MyFirstComponent: React.FC = () => (
   <>
     <div style={{ backgroundColor: "blue", color: "white" }}>
       Hallo Welt {Math.random() > 0.5 ? "!" : "?"}
@@ -16,7 +16,7 @@ const MyFirstComponent = () => (
 let count2 = 0;
 
 const Counter = (props: { stopValue?: number }) => {
-  console.log('render');
+  console.log("render");
 
   const [count, setCount] = useState<number>(0);
 
@@ -26,7 +26,7 @@ const Counter = (props: { stopValue?: number }) => {
       setCount(count + 1);
     }
     console.log(`Count: ${count}, count2: ${count2}`);
-  }
+  };
 
   return (
     <div>
@@ -36,13 +36,15 @@ const Counter = (props: { stopValue?: number }) => {
   );
 };
 
+const stopValues = [4, 2, 5];
+
 // Declarative
 function App() {
   return (
     <div className="App">
-      <Counter stopValue={3} />
-      <Counter />
-      <Counter />
+      {stopValues.map((stopValue) => (
+        <Counter key={stopValue} stopValue={stopValue} />
+      ))}
       <MyFirstComponent />
     </div>
   );
