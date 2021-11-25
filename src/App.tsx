@@ -1,51 +1,21 @@
-import React, { useState } from "react";
+import React from 'react';
 import "./App.css";
+import Counters from "./components/Counters";
+import MyFirstComponent from "./components/MyFirstComponent";
 
-const WasNeues = () => <div>Chinese: 世界，你好！</div>;
-
-const MyFirstComponent: React.FC = () => (
-  <>
-    <div style={{ backgroundColor: "blue", color: "white" }}>
-      Hallo Welt {Math.random() > 0.5 ? "!" : "?"}
-    </div>
-    <div>English: Hello, world!</div>
-    <WasNeues />
-  </>
-);
-
-let count2 = 0;
-
-const Counter = (props: { stopValue?: number }) => {
-  console.log("render");
-
-  const [count, setCount] = useState<number>(0);
-
-  const handleClick = () => {
-    count2 += 1;
-    if (!props.stopValue || (props.stopValue && count < props.stopValue)) {
-      setCount(count + 1);
-    }
-    console.log(`Count: ${count}, count2: ${count2}`);
-  };
-
-  return (
-    <div>
-      <button onClick={handleClick}>Increment</button>
-      <p>Count: {count}</p>
-    </div>
-  );
-};
-
-const stopValues = [4, 2, 5];
+// eslint-disable-next-line react/prop-types
+const MyText: React.FC<{ text: string }> = ({ children, text }) => (
+  <p>Mein Text: {children ? children : text}</p>
+)
 
 // Declarative
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
-      {stopValues.map((stopValue) => (
-        <Counter key={stopValue} stopValue={stopValue} />
-      ))}
-      <MyFirstComponent />
+      <Counters />
+      <MyFirstComponent>
+        <MyText text="Hallo Welt!" />
+      </MyFirstComponent>
     </div>
   );
 }
