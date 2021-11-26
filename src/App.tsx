@@ -1,23 +1,33 @@
-import React from 'react';
+import React from "react";
 import "./App.css";
-import Counters from "./components/Counters";
-import MyFirstComponent from "./components/MyFirstComponent";
-
-// eslint-disable-next-line react/prop-types
-const MyText: React.FC<{ text: string }> = ({ children, text }) => (
-  <p>Mein Text: {children ? children : text}</p>
-)
+import Books from "./components/Books";
 
 // Declarative
 const App: React.FC = () => {
+  const [showBooks, setShowBooks] = React.useState<boolean>(true);
   return (
     <div className="App">
-      <Counters />
-      <MyFirstComponent>
-        <MyText text="Hallo Welt!" />
-      </MyFirstComponent>
+      <header>
+        <button
+          onClick={() => {
+            // toggle
+            setShowBooks(!showBooks);
+          }}
+        >
+          {showBooks ? "Hide" : "Show"} Books
+        </button>
+      </header>
+
+      {showBooks ? (
+        <>
+          <h2>Toggled Books</h2>
+          <Books />
+        </>
+      ) : <h3><i>Toggled books are hidden!</i></h3>}
+      <h2>Permanent Books</h2>
+      <Books />
     </div>
   );
-}
+};
 
 export default App;
