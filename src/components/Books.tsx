@@ -1,20 +1,42 @@
-import React from "react";
-import useBooks, { BookT } from "../hooks/useBooks";
+import React, { useEffect } from "react";
+import { limitContext } from "..";
+import { BookT, BooksT } from "../hooks/useBooks";
 
+// Child component
 const Books: React.FC = () => {
   // fetch books
-  const [books, fetchData] = useBooks();
-  
-  const limitHook = React.useState<number>(0);
-  const limit = limitHook[0];
-  const setLimit = limitHook[1];
+  const [books, setBooks] = React.useState<BooksT>([]);
+
+  // consume context
+  const { limit, setLimit } = React.useContext(limitContext);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "http://localhost:4730/books?_limit=" + limit
+      );
+      const result = await response.json();
+      setTimeout(() => {
+        setBooks(result);
+      }, 3000);
+    };
+    fetchData();
+  }, [limit]);
 
   // display books
   return (
-    <div style={{ backgroundColor: '#eee', padding: 20 }}>
-      <button onClick={() => setLimit(limit + 1)}>Increase limit</button>
-      <button onClick={() => fetchData()}>Fetch data</button>
-      <p>Limit: <b>{limit}</b></p>
+    <div style={{ backgroundColor: "#eee", padding: 20 }}>
+      <button
+        onClick={() => {
+          const newCount = limit + 1;
+          setLimit(newCount);
+        }}
+      >
+        Increase limit
+      </button>
+      <p>
+        Limit: <b>{limit}</b>
+      </p>
       {books.map((book: BookT) => (
         <p key={book.isbn}>
           <div>{book.title}</div>

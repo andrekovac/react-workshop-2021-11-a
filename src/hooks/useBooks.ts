@@ -5,7 +5,7 @@ export type BookT = {
   isbn: string;
 };
 
-type BooksT = Array<BookT>;
+export type BooksT = Array<BookT>;
 
 const useBooks = (): readonly [BooksT, () => Promise<void>] => {
   const [books, setBooks] = React.useState<BooksT>([]);
