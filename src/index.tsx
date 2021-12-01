@@ -1,33 +1,24 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-type LimitContextT = {
-  limit: number;
-  setLimit: (limit: number) => void;
-}
-
-export const limitContext = React.createContext<LimitContextT>({
-  limit: 0,
-  setLimit: () => null
-});
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import CounterProvider from "./context/counter";
+import { useLimitProvider } from "./context/limit";
 
 const AppWrapper = () => {
-  const [limit, setLimit] = useState(0);
-  
-  const limitValue = {
-    limit,
-    setLimit,
-  }
+  // usage of limitProvider hook
+  const [LimitProvider, limitContextValue] = useLimitProvider();
 
   return (
-    <limitContext.Provider value={limitValue}>
-      <App />
-    </limitContext.Provider>
-  )
-}
+    // usage of CounterProvider component
+    <CounterProvider>
+      <LimitProvider value={limitContextValue}>
+        <App />
+      </LimitProvider>
+    </CounterProvider>
+  );
+};
 
 ReactDOM.render(
   <React.StrictMode>

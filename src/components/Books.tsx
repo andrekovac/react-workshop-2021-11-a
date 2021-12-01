@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { limitContext } from "..";
+import { useLimit } from "../context/limit";
 import { BookT, BooksT } from "../hooks/useBooks";
 
 // Child component
@@ -8,7 +8,7 @@ const Books: React.FC = () => {
   const [books, setBooks] = React.useState<BooksT>([]);
 
   // consume context
-  const { limit, setLimit } = React.useContext(limitContext);
+  const { limit, setLimit } = useLimit();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +26,11 @@ const Books: React.FC = () => {
   // display books
   return (
     <div style={{ backgroundColor: "#eee", padding: 20 }}>
+      <p>
+        <em>
+          <b>Note</b>: Make sure the bookmonkey API is running on port 4730.
+        </em>
+      </p>
       <button
         onClick={() => {
           const newCount = limit + 1;

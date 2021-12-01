@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useCounter } from "../context/counter";
 
 let count2 = 0;
 
 const Counter = (props: { stopValue?: number }) => {
   console.log("render");
 
-  const [count, setCount] = useState<number>(0);
+  const { count, incrementCount } = useCounter();
 
   const handleClick = () => {
     count2 += 1;
     if (!props.stopValue || (props.stopValue && count < props.stopValue)) {
-      setCount(count + 1);
+      incrementCount();
     }
     console.log(`Count: ${count}, count2: ${count2}`);
   };
