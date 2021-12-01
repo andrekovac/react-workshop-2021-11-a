@@ -1,34 +1,34 @@
 import React from "react";
-import { limitContext } from ".";
+import { Link, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Books from "./components/Books";
+import Counter from "./components/Counter";
+import BooksScreen from "./screens/BooksScreen";
+import FilesScreen from "./screens/FilesScreen";
 
 // Parent Component
 const App: React.FC = () => {
-  const [showBooks, setShowBooks] = React.useState<boolean>(true);
-  const { limit: limit1 } = React.useContext(limitContext);
   return (
     <div className="App">
-      <header style={{ backgroundColor: 'yellow' }}>
-        <p>Limit 1: <b>{limit1}</b></p>
-        <button
-          onClick={() => {
-            // toggle
-            setShowBooks(!showBooks);
-          }}
-        >
-          {showBooks ? "Hide" : "Show"} Books
-        </button>
-      </header>
+      <div>
+        <h2>Menu</h2>
+        <div><Link to="/">BooksScreen</Link></div>
+        <div><Link to="/files">File Upload</Link></div>
+        <div><Link to="/counter">Counter</Link></div>
+      </div>
+      <hr />
+      <Switch>
+        <Route exact path="/">
+          <BooksScreen />
+        </Route>
+        <Route strict exact path="/files">
+          <FilesScreen />
+        </Route>
+        <Route path="/counter">
+          <Counter />
+        </Route>
+      </Switch>
+      <hr />
 
-      {showBooks ? (
-        <>
-          <h2>Toggled Books</h2>
-          <Books />
-        </>
-      ) : <h3><i>Toggled books are hidden!</i></h3>}
-      {/* <h2>Permanent Books</h2>
-      <Books limit={limit2} callback={setLimit2} /> */}
     </div>
   );
 };

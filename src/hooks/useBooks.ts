@@ -7,6 +7,9 @@ export type BookT = {
 
 export type BooksT = Array<BookT>;
 
+/**
+ * Custom books hook
+ */
 const useBooks = (): readonly [BooksT, () => Promise<void>] => {
   const [books, setBooks] = React.useState<BooksT>([]);
 
